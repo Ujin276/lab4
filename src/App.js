@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import HomePage from './pages/HomePage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import UserPlaces from './pages/UserPlaces';
+import AfterLogin from './pages/AfterLoginPage';
+import Detail from './pages/PlacesDetail';
+import AddPlacePage from './pages/AddPlaces';
+import EditPlace from './pages/EditPlacePage';
 
-function App() {
+export default function NavigationPage() {
+  const [currentPage, setCurrentPage] = useState('home');
+  const [selectedPlaceIndex, setSelectedPlaceIndex] = useState(null);
+
+  const navigateTo = (page) => setCurrentPage(page);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-col items-center justify-center w-full p-4">
+      {currentPage === 'home' && <HomePage navigateTo={navigateTo} />}
+      {currentPage === 'register' && <RegisterPage navigateTo={navigateTo} />}
+      {currentPage === 'login' && <LoginPage navigateTo={navigateTo} />}
+      {currentPage === 'userPlaces' && (<UserPlaces navigateTo={navigateTo} setSelectedPlaceIndex={setSelectedPlaceIndex}
+        />
+      )}
+      {currentPage === 'AfterLogin' && (<AfterLogin navigateTo={navigateTo} setSelectedPlaceIndex={setSelectedPlaceIndex}
+        />
+      )}
+      {currentPage === 'detail' && <Detail navigateTo={navigateTo} />}
+      {currentPage === 'addPlace' && <AddPlacePage navigateTo={navigateTo} />}
+      {currentPage === 'editPlace' && selectedPlaceIndex !== null && (<EditPlace navigateTo={navigateTo} selectedPlaceIndex={selectedPlaceIndex}
+        />
+      )}
     </div>
   );
 }
-
-export default App;
